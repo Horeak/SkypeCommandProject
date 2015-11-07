@@ -1,0 +1,65 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant" basedir="." default="test">
+    <property file="build.properties" prefix="prop."/>
+
+    <path id="build.classpath">
+        <fileset dir="${prop.lib.dir}">
+            <include name="**/*.jar"/>
+            <include name="**/*.zip"/>
+        </fileset>
+    </path>
+
+    <target name="init" depends="resolve">
+        <property name="sourceDir" value="${prop.source.dir}"/>
+        <property name="outputDir" value="${prop.output.dir}"/>
+        <property name="outputDirJar" value="${prop.output.dir.jar}"/>
+    </target>
+
+    <target name="clean" depends="init">
+        <deltree dir="${outputDir}"/>
+    </target>
+
+    <target name="prepare" depends="clean">
+        <mkdir dir="${outputDir}"/>
+        <mkdir dir="${outputDirJar}"/>
+    </target>
+
+    <target name="compile" depends="prepare">
+        <javac destdir="${outputDir}">
+            <src path="${sourceDir}"/>
+            <classpath refid="build.classpath"/>
+        </javac>
+
+        <jar destfile="${outputDirJar}/${prop.file.name}.jar" basedir="${outputDir}">
+            <zipgroupfileset dir="${prop.lib.dir}" includes="*.jar"/>
+
+            <manifest>
+                <attribute name="Main-Class" value="${prop.main.class}"/>
+                <attribute name="Class-Path" value="build.classpath"/>
+            </manifest>
+        </jar>
+
+        <deltree dir="${outputDir}"/>
+    </target>
+
+
+    <!-- Used to start build with travis CI -->
+    <target name="test" depends="compile">
+    </target>
+
+
+    <!-- ivy start -->
+    <!-- ivy to get dependencies and copy to project lib folder automatically -->
+    <target name="resolve" description="retrieve dependencies with ivy" depends="ivy">
+        <ivy:resolve/>
+        <ivy:retrieve sync="true" type="jar"/>
+    </target>
+
+    <!-- install ivy -->
+    <target name="ivy" description="Install ivy">
+        <mkdir dir="${user.home}/.ant/lib"/>
+        <get dest="${user.home}/.ant/lib/ivy.jar"
+             src="http://search.maven.org/remotecontent?filepath=org/apache/ivy/ivy/${prop.ivy.version}/ivy-${prop.ivy.version}.jar"/>
+    </target>
+    <!-- ivy end -->
+
+</project>
