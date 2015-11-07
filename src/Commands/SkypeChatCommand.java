@@ -5,7 +5,6 @@ package Commands;
 * Created: 26.06.2015
 */
 
-import Utils.CommandFilter;
 import Utils.SkypeMessagingModes;
 import com.skype.ChatMessage;
 
@@ -18,24 +17,25 @@ public abstract class SkypeChatCommand {
 
 	protected boolean enabled = true;
 
-	public boolean isEnabled(){
+	public boolean isEnabled() {
 		return enabled;
 	}
 
-	public void setEnabled(boolean enabled){
-		for(SkypeSubCommand sub : subCommands){
+	public void setEnabled( boolean enabled ) {
+		for (SkypeSubCommand sub : subCommands) {
 			sub.enabled = enabled;
 		}
 
 		this.enabled = enabled;
 	}
 
-	public abstract void commandExcecuted(ChatMessage message, String clearString, SkypeMessagingModes mode, ChatMessage.Type messageType) throws Exception;
-	public abstract boolean canExcecute(ChatMessage message, String clearString, SkypeMessagingModes mode, ChatMessage.Type messageType) throws Exception;
+	public abstract void commandExcecuted( ChatMessage message, String[] args, SkypeMessagingModes mode, ChatMessage.Type messageType ) throws Exception;
+
+	public abstract boolean canExcecute( ChatMessage message, String[] args, SkypeMessagingModes mode, ChatMessage.Type messageType ) throws Exception;
 
 	public abstract String commandPrefix();
 
-	public abstract CommandFilter CommandMessageFilter();
-
-	public ActionListener nonStandardSetting(){return null;}
+	public ActionListener nonStandardSetting() {
+		return null;
+	}
 }

@@ -1,7 +1,6 @@
 package Commands.SkypeUtilCommands;
 
 import Commands.SkypeChatCommand;
-import Utils.CommandFilter;
 import Utils.SkypeMessagingModes;
 import com.skype.ChatMessage;
 
@@ -10,18 +9,19 @@ import javax.script.ScriptEngineManager;
 
 public class MathCommand extends SkypeChatCommand {
 	@Override
-	public void commandExcecuted(ChatMessage message, String clearString, SkypeMessagingModes mode, ChatMessage.Type messageType) throws Exception {
+	public void commandExcecuted( ChatMessage message, String[] args, SkypeMessagingModes mode, ChatMessage.Type messageType ) throws Exception {
+		String input = "";
+		for (String t : args) input = input + t;
+
 		ScriptEngineManager mgr = new ScriptEngineManager();
 		ScriptEngine engine = mgr.getEngineByName("JavaScript");
 
-		String foo = clearString.replace("x", "*");
-
-		message.getChat().send("[MathAnswer] " + clearString + " = " + engine.eval(foo).toString());
-
+		String foo = input.replace("x", "*");
+		message.getChat().send("[MathAnswer] " + input + " = " + engine.eval(foo).toString());
 	}
 
 	@Override
-	public boolean canExcecute(ChatMessage message, String clearString, SkypeMessagingModes mode, ChatMessage.Type messageType) throws Exception {
+	public boolean canExcecute( ChatMessage message, String[] args, SkypeMessagingModes mode, ChatMessage.Type messageType ) throws Exception {
 		return messageType == ChatMessage.Type.SAID;
 	}
 
@@ -30,8 +30,4 @@ public class MathCommand extends SkypeChatCommand {
 		return "Math";
 	}
 
-	@Override
-	public CommandFilter CommandMessageFilter() {
-		return CommandFilter.StartWith;
-	}
 }

@@ -19,15 +19,35 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class CommandPandoraBots  extends ChatterBotCommand {
+public class CommandPandoraBots extends ChatterBotCommand {
 
+	public static String DEFAULT_BOT_ID = "b0dafd24ee35a477";
 	public ChatterBotFactory factory = new ChatterBotFactory();
+	public ChatterBot pandoraBots = null;
+	public ChatterBotSession pandoraBotsSession = null;
+	public String botID = DEFAULT_BOT_ID;
+
+	public CommandPandoraBots() {
+		super();
+
+		subCommands.add(new SubCommand_changeBotID());
+
+		try {
+
+			pandoraBots = factory.create(ChatterBotType.PANDORABOTS, DEFAULT_BOT_ID);
+			pandoraBotsSession = pandoraBots.createSession();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
 
 	@Override
 	public ActionListener nonStandardSetting() {
 		return new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed( ActionEvent e ) {
 				JFrame frame = new JFrame(commandPrefix());
 				JButton button = new JButton("Enabled: " + isEnabled());
 
@@ -35,15 +55,11 @@ public class CommandPandoraBots  extends ChatterBotCommand {
 				JPanel panel = new JPanel();
 				panel.setLayout(new WrapLayout());
 
-				button.setPreferredSize(new Dimension(150,30));
-				button.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						setEnabled(!isEnabled());
-						button.setText("Enabled: " + isEnabled());
-					}
+				button.setPreferredSize(new Dimension(150, 30));
+				button.addActionListener(( actionPerformed ) -> {
+					setEnabled(!isEnabled());
+					button.setText("Enabled: " + isEnabled());
 				});
-
 
 				JLabel label = new JLabel("Bot ID: ");
 				JTextField textField = new JTextField(botID);
@@ -55,12 +71,12 @@ public class CommandPandoraBots  extends ChatterBotCommand {
 
 				frame.addWindowListener(new WindowAdapter() {
 					@Override
-					public void windowClosed(WindowEvent e) {
+					public void windowClosed( WindowEvent e ) {
 						super.windowClosed(e);
 
 						String temp = textField.getText();
 
-						if(temp != null && temp.length() == 16){
+						if (temp != null && temp.length() == 16) {
 							botID = temp;
 						}
 					}
@@ -79,29 +95,6 @@ public class CommandPandoraBots  extends ChatterBotCommand {
 		};
 	}
 
-	public ChatterBot pandoraBots = null;
-	public ChatterBotSession pandoraBotsSession = null;
-
-	public static String DEFAULT_BOT_ID = "b0dafd24ee35a477";
-	public String botID = DEFAULT_BOT_ID;
-
-	public CommandPandoraBots()
-	{
-		super();
-
-		subCommands.add(new SubCommand_changeBotID());
-
-		try {
-
-			pandoraBots = factory.create(ChatterBotType.PANDORABOTS, DEFAULT_BOT_ID);
-			pandoraBotsSession = pandoraBots.createSession();
-
-		}catch (Exception e){
-			e.printStackTrace();
-		}
-
-	}
-
 	@Override
 	public String getBotName() {
 		return "PandoraBots";
@@ -118,7 +111,7 @@ public class CommandPandoraBots  extends ChatterBotCommand {
 	}
 
 	@Override
-	public void setSession(ChatterBotSession session) {
+	public void setSession( ChatterBotSession session ) {
 		pandoraBotsSession = session;
 	}
 

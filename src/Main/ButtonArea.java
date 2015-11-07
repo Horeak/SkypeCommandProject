@@ -8,28 +8,28 @@ import com.skype.SkypeException;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 public class ButtonArea {
 
 	public static JPanel panel = new JPanel();
 	public static JScrollPane scrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-	public static Dimension buttonSize = new Dimension(120,30);
+	public static Dimension buttonSize = new Dimension(120, 30);
 
-	public ButtonArea(){
+	public ButtonArea() {
 		scrollPane.setPreferredSize(new Dimension(160, 450));
 		panel.setLayout(new WrapLayout());
 
 		addButtons();
 	}
 
-	public JScrollPane getScrollPane(){
+	public JScrollPane getScrollPane() {
 		return scrollPane;
 	}
 
-	public void addButton(String t, ActionListener listener){
+	public void addButton( String t, ActionListener listener ) {
 		JButton button = new JButton(t);
 
 		button.setPreferredSize(buttonSize);
@@ -44,7 +44,7 @@ public class ButtonArea {
 			for (Chat chat : ChatUtils.getChats()) {
 				addButton("Chat: " + chat.getWindowTitle(), getActionForChatButton(chat));
 			}
-		}catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -52,51 +52,44 @@ public class ButtonArea {
 	}
 
 
+	public ActionListener getActionForChatButton( Chat chat ) {
+		return ( pressOptionButton ) -> {
+			try {
+				JFrame frame = new JFrame("Settings: " + chat.getWindowTitle());
+				frame.setPreferredSize(new Dimension(280, 300));
 
-	public ActionListener getActionForChatButton(Chat chat){
-		return new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					JFrame frame = new JFrame("Settings: " + chat.getWindowTitle());
-					frame.setPreferredSize(new Dimension(280, 300));
+				JPanel panel = new JPanel();
+				panel.setLayout(new WrapLayout());
 
-					JPanel panel = new JPanel();
-					panel.setLayout(new WrapLayout());
+				JScrollPane scrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+				for (Map.Entry<String, SkypeChatCommand> ent : ChatUtils.getCommandsForChat(chat).entrySet()) {
+					SkypeChatCommand chatCommand = ent.getValue();
 
-					JScrollPane scrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-					for(SkypeChatCommand chatCommand : ChatUtils.getCommandsForChat(chat)){
-						JButton button = new JButton(chatCommand.commandPrefix() + (chatCommand.nonStandardSetting() == null ? ": " + chatCommand.isEnabled() : ""));
+					JButton button = new JButton(chatCommand.commandPrefix() + (chatCommand.nonStandardSetting() == null ? ": " + chatCommand.isEnabled() : ""));
 
-						button.setPreferredSize(new Dimension(200, 30));
+					button.setPreferredSize(new Dimension(200, 30));
 
-						if(chatCommand.nonStandardSetting() != null) {
-							button.addActionListener(chatCommand.nonStandardSetting());
-						}else{
-							button.addActionListener(new ActionListener() {
-								@Override
-								public void actionPerformed(ActionEvent e) {
-									chatCommand.setEnabled(!chatCommand.isEnabled());
-									button.setText(chatCommand.commandPrefix() + ": " + chatCommand.isEnabled());
-								}
-							});
-
-						}
-
-						panel.add(button);
+					if (chatCommand.nonStandardSetting() != null) {
+						button.addActionListener(chatCommand.nonStandardSetting());
+					} else {
+						button.addActionListener(( changeStandardButton ) -> {
+							chatCommand.setEnabled(!chatCommand.isEnabled());
+							button.setText(chatCommand.commandPrefix() + ": " + chatCommand.isEnabled());
+						});
 					}
 
-					frame.add(scrollPane, BorderLayout.CENTER);
-
-					frame.pack();
-					frame.setVisible(true);
-					frame.setResizable(false);
-					frame.setLocationRelativeTo(null);
-
-				} catch (SkypeException e1) {
-					e1.printStackTrace();
+					panel.add(button);
 				}
 
+				frame.add(scrollPane, BorderLayout.CENTER);
+
+				frame.pack();
+				frame.setVisible(true);
+				frame.setResizable(false);
+				frame.setLocationRelativeTo(null);
+
+			} catch (SkypeException e1) {
+				e1.printStackTrace();
 			}
 		};
 	}

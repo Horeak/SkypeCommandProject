@@ -12,8 +12,9 @@ public abstract class SkypeSubCommand {
 
 	public boolean enabled = true;
 
-	public abstract void commandExcecuted(ChatMessage message, String clearString, SkypeMessagingModes mode, ChatMessage.Type messageType, SkypeChatCommand command) throws Exception;
-	public abstract boolean canExcecute(ChatMessage message, String clearString, SkypeMessagingModes mode, ChatMessage.Type messageType, SkypeChatCommand command) throws Exception;
+	public abstract void commandExcecuted( ChatMessage message, String[] args, SkypeMessagingModes mode, ChatMessage.Type messageType, SkypeChatCommand command ) throws Exception;
+
+	public abstract boolean canExcecute( ChatMessage message, String[] args, SkypeMessagingModes mode, ChatMessage.Type messageType, SkypeChatCommand command ) throws Exception;
 
 	public abstract String commandPrefix();
 }

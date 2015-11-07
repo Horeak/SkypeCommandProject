@@ -12,38 +12,40 @@ import com.skype.ChatMessage;
 class SubCommand_changeBotID extends SkypeSubCommand {
 
 	@Override
-	public void commandExcecuted(ChatMessage message, String clearString, SkypeMessagingModes mode, ChatMessage.Type messageType, SkypeChatCommand command) throws Exception {
+	public void commandExcecuted( ChatMessage message, String[] args, SkypeMessagingModes mode, ChatMessage.Type messageType, SkypeChatCommand command ) throws Exception {
 		CommandPandoraBots bots = null;
 
-		if(command instanceof CommandPandoraBots){
-			bots = (CommandPandoraBots)command;
+		if (command instanceof CommandPandoraBots) {
+			bots = (CommandPandoraBots) command;
 		}
 
-		if(clearString.equalsIgnoreCase("reset")){
-			bots.pandoraBots = bots.factory.create(ChatterBotType.PANDORABOTS, CommandPandoraBots.DEFAULT_BOT_ID);
-			bots.pandoraBotsSession = bots.pandoraBots.createSession();
+		if (bots != null) {
+			if (args[ 0 ].equalsIgnoreCase("reset")) {
+				bots.pandoraBots = bots.factory.create(ChatterBotType.PANDORABOTS, CommandPandoraBots.DEFAULT_BOT_ID);
+				bots.pandoraBotsSession = bots.pandoraBots.createSession();
 
-			bots.botID = CommandPandoraBots.DEFAULT_BOT_ID;
+				bots.botID = CommandPandoraBots.DEFAULT_BOT_ID;
 
-			message.getChat().send("[PandoraBots] Bot id has been reset.");
-			return;
-		}
+				message.getChat().send("[PandoraBots] Bot id has been reset.");
+				return;
+			}
 
-		if(clearString != null && clearString.length() == 16){
-			bots.pandoraBots = bots.factory.create(ChatterBotType.PANDORABOTS, clearString);
-			bots.pandoraBotsSession = bots.pandoraBots.createSession();
+			if (args[ 0 ] != null && args[ 0 ].length() == 16) {
+				bots.pandoraBots = bots.factory.create(ChatterBotType.PANDORABOTS, args[ 0 ]);
+				bots.pandoraBotsSession = bots.pandoraBots.createSession();
 
-			bots.botID = clearString;
+				bots.botID = args[ 0 ];
 
-			message.getChat().send("[PandoraBots] Changed bot id to: " + clearString);
-		}else{
-			message.getChat().send("[PandoraBots] Bot id is invalid! Check from the PandoraBots website");
+				message.getChat().send("[PandoraBots] Changed bot id to: " + args[ 0 ]);
+			} else {
+				message.getChat().send("[PandoraBots] Bot id is invalid! Check from the PandoraBots website");
+			}
 		}
 
 	}
 
 	@Override
-	public boolean canExcecute(ChatMessage message, String clearString, SkypeMessagingModes mode, ChatMessage.Type messageType, SkypeChatCommand command) throws Exception {
+	public boolean canExcecute( ChatMessage message, String[] args, SkypeMessagingModes mode, ChatMessage.Type messageType, SkypeChatCommand command ) throws Exception {
 		return messageType == ChatMessage.Type.SAID;
 	}
 

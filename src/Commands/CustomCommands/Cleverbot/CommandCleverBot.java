@@ -19,15 +19,14 @@ public class CommandCleverBot extends ChatterBotCommand {
 	public ChatterBot cleverBot = null;
 	public ChatterBotSession cleverBotSession = null;
 
-	public CommandCleverBot()
-	{
+	public CommandCleverBot() {
 		super();
 
 		try {
 			cleverBot = factory.create(ChatterBotType.CLEVERBOT);
 			cleverBotSession = cleverBot.createSession();
 
-		}catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -48,7 +47,7 @@ public class CommandCleverBot extends ChatterBotCommand {
 	}
 
 	@Override
-	public void setSession(ChatterBotSession session) {
+	public void setSession( ChatterBotSession session ) {
 		cleverBotSession = session;
 	}
 

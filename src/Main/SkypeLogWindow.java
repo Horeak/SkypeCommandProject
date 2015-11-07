@@ -7,21 +7,21 @@ import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.io.PrintStream;
 
-public class SkypeLogWindow{
+public class SkypeLogWindow {
 
-	private static ConsolePrintStream taOutputStream;
 	public static PrintStream stream = System.out;
-
 	public static JFrame frame = new JFrame("Skype command program");
 	public static ButtonArea buttonArea;
+	private static ConsolePrintStream taOutputStream;
 
 	public static void createAndShowGui() {
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setPreferredSize(new Dimension(600, 500));
 
 		JTextPane textArea = new JTextPane();
-		DefaultCaret caret = (DefaultCaret)textArea.getCaret();
+		DefaultCaret caret = (DefaultCaret) textArea.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		textArea.setCaret(caret);
 
 		textArea.setEditable(false);
 		taOutputStream = new ConsolePrintStream(textArea);

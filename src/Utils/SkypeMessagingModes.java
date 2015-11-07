@@ -6,5 +6,5 @@ package Utils;/*
 
 public enum SkypeMessagingModes {
 	SENT,
-	RECEIVED;
+	RECEIVED
 }
