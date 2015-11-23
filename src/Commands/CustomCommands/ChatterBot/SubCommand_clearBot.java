@@ -2,6 +2,7 @@ package Commands.CustomCommands.ChatterBot;
 
 import Commands.SkypeChatCommand;
 import Commands.SkypeSubCommand;
+import Utils.ChatUtils;
 import Utils.SkypeMessagingModes;
 import com.skype.ChatMessage;
 
@@ -19,7 +20,7 @@ class SubCommand_clearBot extends SkypeSubCommand {
 	@Override
 	public void commandExcecuted( ChatMessage message, String[] args, SkypeMessagingModes mode, ChatMessage.Type messageType, SkypeChatCommand commandc ) throws Exception {
 		command.setSession(command.getNewSession());
-		message.getChat().send("[" + command.getBotName() + "] Cleared session.");
+		ChatUtils.sendMessage(message.getChat(), "[" + command.getBotName() + "] Cleared session.");
 	}
 
 	@Override

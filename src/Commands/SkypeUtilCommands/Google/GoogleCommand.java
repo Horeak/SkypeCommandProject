@@ -61,4 +61,9 @@ public class GoogleCommand extends SkypeChatCommand {
 	public String commandPrefix() {
 		return "Google";
 	}
+
+	@Override
+	public String getUsage() {
+		return "Google <textToSearchFor>";
+	}
 }

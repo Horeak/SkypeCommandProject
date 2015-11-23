@@ -6,6 +6,7 @@ package Commands.CustomCommands.ChatterBot;
 */
 
 import Commands.SkypeChatCommand;
+import Utils.ChatUtils;
 import Utils.SkypeMessagingModes;
 import com.google.code.chatterbotapi.ChatterBotSession;
 import com.skype.ChatMessage;
@@ -18,6 +19,8 @@ public abstract class ChatterBotCommand extends SkypeChatCommand {
 		subCommands.add(new SubCommand_clearBot(this));
 		subCommands.add(new SubCommand_botThinkSelf(this));
 	}
+
+//TODO Have a HashMap with a string with recived/sent and chatmessage to store all recived and sent messages for use with things like the thinkself command. clear this when clearing the bot!
 
 	public abstract String getBotName();
 
@@ -43,7 +46,7 @@ public abstract class ChatterBotCommand extends SkypeChatCommand {
 			if (message.getChat() != null) {
 
 				System.out.println(" - " + getBotName() + " replied: " + reply);
-				message.getChat().send("[" + getBotName() + " Says] " + reply);
+				ChatUtils.sendMessage(message.getChat(), "[" + getBotName() + " Says] " + reply);
 
 			} else {
 				System.out.println("ERROR: Null chat");

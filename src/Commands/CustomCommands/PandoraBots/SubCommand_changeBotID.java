@@ -2,6 +2,7 @@ package Commands.CustomCommands.PandoraBots;
 
 import Commands.SkypeChatCommand;
 import Commands.SkypeSubCommand;
+import Utils.ChatUtils;
 import Utils.SkypeMessagingModes;
 import com.google.code.chatterbotapi.ChatterBotType;
 import com.skype.ChatMessage;
@@ -26,7 +27,7 @@ class SubCommand_changeBotID extends SkypeSubCommand {
 
 				bots.botID = CommandPandoraBots.DEFAULT_BOT_ID;
 
-				message.getChat().send("[PandoraBots] Bot id has been reset.");
+				ChatUtils.sendMessage(message.getChat(), "[PandoraBots] Bot id has been reset.");
 				return;
 			}
 
@@ -36,9 +37,9 @@ class SubCommand_changeBotID extends SkypeSubCommand {
 
 				bots.botID = args[ 0 ];
 
-				message.getChat().send("[PandoraBots] Changed bot id to: " + args[ 0 ]);
+				ChatUtils.sendMessage(message.getChat(), "[PandoraBots] Changed bot id to: " + args[0]);
 			} else {
-				message.getChat().send("[PandoraBots] Bot id is invalid! Check from the PandoraBots website");
+				ChatUtils.sendMessage(message.getChat(), "[PandoraBots] Bot id is invalid! Check from the PandoraBots website");
 			}
 		}
 

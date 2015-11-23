@@ -41,16 +41,17 @@ public class SkypeApplication extends ChatMessageAdapter {
 		});
 
 	}
-
 	public void chatMessageSent( ChatMessage sentChatMessage ) throws SkypeException {
 		System.out.println("Message sent: " + sentChatMessage.getContent());
-		SwingUtilities.invokeLater(() -> {
-			try {
-				message(sentChatMessage, 0, sentChatMessage.getType());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
+		if (!ChatUtils.wasMessageMachineSent(sentChatMessage.getChat(), sentChatMessage.getContent())) {
+			SwingUtilities.invokeLater(() -> {
+				try {
+					message(sentChatMessage, 0, sentChatMessage.getType());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			});
+		}
 	}
 
 

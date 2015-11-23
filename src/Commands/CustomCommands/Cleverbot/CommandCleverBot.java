@@ -51,4 +51,8 @@ public class CommandCleverBot extends ChatterBotCommand {
 		cleverBotSession = session;
 	}
 
+	@Override
+	public String getUsage() {
+		return "CleverBot <text/subcommand>";
+	}
 }

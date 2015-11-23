@@ -2,6 +2,7 @@ package Commands.CustomCommands.ChatterBot;
 
 import Commands.SkypeChatCommand;
 import Commands.SkypeSubCommand;
+import Utils.ChatUtils;
 import Utils.SkypeMessagingModes;
 import com.skype.ChatMessage;
 
@@ -35,12 +36,12 @@ class SubCommand_botThinkSelf extends SkypeSubCommand {
 				if (message.getChat() != null) {
 
 					System.out.println(" - " + command.getBotName() + " replied: " + reply);
-					message.getChat().send("[" + command.getBotName() + " Says] " + reply);
+					ChatUtils.sendMessage(message.getChat(), "[" + command.getBotName() + " Says] " + reply);
 				}
 			}
 
 		} else {
-			message.getChat().send("[" + command.getBotName() + "] No recent messages from " + command.getBotName() + ".");
+			ChatUtils.sendMessage(message.getChat(), "[" + command.getBotName() + "] No recent messages from " + command.getBotName() + ".");
 		}
 	}
 

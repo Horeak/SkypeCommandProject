@@ -115,6 +115,10 @@ public class CommandPandoraBots extends ChatterBotCommand {
 		pandoraBotsSession = session;
 	}
 
+	@Override
+	public String getUsage() {
+		return "PandoraBots <text/subcommand>";
+	}
 
 }
 

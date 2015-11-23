@@ -35,6 +35,12 @@ public abstract class SkypeChatCommand {
 
 	public abstract String commandPrefix();
 
+	public abstract String getUsage();
+
+	public boolean listCommand() {
+		return true;
+	}
+
 	public ActionListener nonStandardSetting() {
 		return null;
 	}

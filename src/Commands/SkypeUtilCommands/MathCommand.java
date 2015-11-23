@@ -1,6 +1,7 @@
 package Commands.SkypeUtilCommands;
 
 import Commands.SkypeChatCommand;
+import Utils.ChatUtils;
 import Utils.SkypeMessagingModes;
 import com.skype.ChatMessage;
 
@@ -17,7 +18,7 @@ public class MathCommand extends SkypeChatCommand {
 		ScriptEngine engine = mgr.getEngineByName("JavaScript");
 
 		String foo = input.replace("x", "*");
-		message.getChat().send("[MathAnswer] " + input + " = " + engine.eval(foo).toString());
+		ChatUtils.sendMessage(message.getChat(), "[MathAnswer] " + input + " = " + engine.eval(foo).toString());
 	}
 
 	@Override
@@ -28,6 +29,11 @@ public class MathCommand extends SkypeChatCommand {
 	@Override
 	public String commandPrefix() {
 		return "Math";
+	}
+
+	@Override
+	public String getUsage() {
+		return "Math <question>";
 	}
 
 }
