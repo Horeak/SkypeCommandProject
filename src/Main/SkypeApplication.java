@@ -1,8 +1,4 @@
-package Main;/*
-* Project: Random Java Creations
-* Package: PACKAGE_NAME
-* Created: 22.06.2015
-*/
+package Main;
 
 import Utils.ChatUtils;
 import com.skype.ChatMessage;
@@ -13,7 +9,6 @@ import com.skype.SkypeException;
 import javax.swing.*;
 
 public class SkypeApplication extends ChatMessageAdapter {
-
 	public SkypeApplication() {
 		System.out.println("Program has started successfully.");
 	}
