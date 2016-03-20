@@ -8,6 +8,8 @@ import Commands.SkypeUtilCommands.Google.GoogleCommand;
 import Commands.SkypeUtilCommands.InvalidCommand;
 import Commands.SkypeUtilCommands.ListCommandsCommand;
 import Commands.SkypeUtilCommands.MathCommand;
+import Commands.SkypeUtilCommands.SkypeSpamCommand;
+import Commands.TextAdventureGame.Text.TextAdventureCommand;
 import Main.SkypeLogWindow;
 import com.skype.Chat;
 import com.skype.ChatMessage;
@@ -21,7 +23,7 @@ import java.util.Map;
 
 public class ChatUtils {
 
-	public static SkypeChatCommand[] commands = new SkypeChatCommand[]{new CommandCleverBot(), new CommandPandoraBots(), new MathCommand(), new ListCommandsCommand(), new GoogleCommand(), new InvalidCommand()};
+	public static SkypeChatCommand[] commands = new SkypeChatCommand[]{new CommandCleverBot(), new CommandPandoraBots(), new MathCommand(), new ListCommandsCommand(), new GoogleCommand(), new InvalidCommand(), new TextAdventureCommand(), new SkypeSpamCommand()};
 	public static HashMap<Chat, ArrayList<ChatMessage>> messages = new HashMap<>();
 	private static HashMap<Chat, SkypeChatCommand[]> ChatCommandStore = new HashMap<>();
 

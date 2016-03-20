@@ -1,6 +1,7 @@
 package Commands.SkypeUtilCommands;
 
 import Commands.SkypeChatCommand;
+import Commands.SkypeSubCommand;
 import Utils.ChatUtils;
 import Utils.SkypeMessagingModes;
 import com.skype.ChatMessage;
@@ -34,5 +35,20 @@ public class InvalidCommand extends SkypeChatCommand {
 	@Override
 	public boolean listCommand() {
 		return false;
+	}
+
+
+	protected boolean enabled = false;
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled( boolean enabled ) {
+		for (SkypeSubCommand sub : subCommands) {
+			sub.enabled = enabled;
+		}
+
+		this.enabled = enabled;
 	}
 }

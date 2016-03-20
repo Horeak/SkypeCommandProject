@@ -31,7 +31,7 @@ public class GoogleCommand extends SkypeChatCommand {
 	@Override
 	public void commandExcecuted( ChatMessage message, String[] args, SkypeMessagingModes mode, ChatMessage.Type messageType ) throws Exception {
 		String input = "";
-		for (String t : args) input += t;
+		for (String t : args) input += t + " ";
 
 		String google = "http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=";
 		String search = input;
